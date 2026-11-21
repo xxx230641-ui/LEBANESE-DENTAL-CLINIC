@@ -1,0 +1,6 @@
+{
+  "name": "Lebanese Dental Clinic - المركز اللبناني للأسنان",
+  "description": "Premium dental clinic in Muscat, Oman offering exceptional patient care, dental implants, cosmetic dentistry, and general dental services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
