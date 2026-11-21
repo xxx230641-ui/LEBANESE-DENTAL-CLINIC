@@ -14,7 +14,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
   content,
   onSelectServiceForBooking,
 }) => {
-  const [openChapter, setOpenChapter] = useState<'maintenance' | 'repair' | 'transformation'>(
+  const [openChapter, setOpenChapter] = useState<'maintenance' | 'repair' | 'transformation' | null>(
     'maintenance',
   );
   const [activeService, setActiveService] = useState<ServiceItem | null>(null);
@@ -82,7 +82,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   <button
                     type="button"
                     aria-expanded={isOpen}
-                    onClick={() => setOpenChapter(chapter.id)}
+                    onClick={() => setOpenChapter((prev) => (prev === chapter.id ? null : chapter.id))}
                     className="w-full flex items-center justify-between gap-4 text-start group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E9BA4A] rounded-lg py-1"
                   >
                     <div className="flex items-baseline gap-5">

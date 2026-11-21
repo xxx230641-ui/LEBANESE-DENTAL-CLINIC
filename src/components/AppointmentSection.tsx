@@ -5,6 +5,7 @@ import type { ServiceItem, SiteContent } from '../data/translations';
 import {
   buildWhatsAppBookingUrl,
   formatWhatsAppMessage,
+  getLocalIsoDate,
   validateAppointmentForm,
   type AppointmentFormData,
   type AppointmentValidationErrors,
@@ -93,11 +94,13 @@ export const AppointmentSection: React.FC<AppointmentSectionProps> = ({
     link.href = whatsappUrl;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
     link.click();
+    link.remove();
   };
 
   const prepared = submittedData ? buildBookingOutput(submittedData) : null;
-  const todayIso = new Date().toISOString().split('T')[0];
+  const todayIso = getLocalIsoDate();
 
   return (
     <section id="appointment" className="bg-[#F9F6EE] pb-20 sm:pb-28">
@@ -152,7 +155,7 @@ export const AppointmentSection: React.FC<AppointmentSectionProps> = ({
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#252525]/55 mb-2.5">
                       {content.preparedPreviewLabel}
                     </p>
-                    <pre className="whitespace-pre-wrap font-sans text-sm text-[#252525] leading-relaxed">
+                    <pre dir="auto" className="whitespace-pre-wrap font-sans text-sm text-[#252525] leading-relaxed">
                       {prepared.previewMessage}
                     </pre>
                   </div>
@@ -256,6 +259,7 @@ export const AppointmentSection: React.FC<AppointmentSectionProps> = ({
                         id="appointment-date"
                         name="preferredDate"
                         type="date"
+                        dir="ltr"
                         min={todayIso}
                         value={formData.preferredDate}
                         onChange={(e) => handleFieldChange('preferredDate', e.target.value)}

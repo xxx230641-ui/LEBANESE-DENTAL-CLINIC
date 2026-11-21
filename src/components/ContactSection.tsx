@@ -13,7 +13,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ lang, content })
   const [iframeFailed, setIframeFailed] = useState(false);
   const DirectionalChevron = lang === 'ar' ? ChevronLeft : ChevronRight;
 
-  const embedUrl = `https://maps.google.com/maps?q=${CLINIC_INFO.coordinates.lat},${CLINIC_INFO.coordinates.lng}&z=16&output=embed`;
+  const embedUrl = `https://maps.google.com/maps?q=${CLINIC_INFO.coordinates.lat},${CLINIC_INFO.coordinates.lng}&hl=${lang}&z=16&output=embed`;
 
   return (
     <section id="contact" className="bg-[#F9F6EE] py-20 sm:py-28 border-t border-[#252525]/8">

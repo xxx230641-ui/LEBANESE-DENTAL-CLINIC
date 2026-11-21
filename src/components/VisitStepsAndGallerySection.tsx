@@ -18,7 +18,12 @@ export const VisitStepsAndGallerySection: React.FC<VisitStepsAndGallerySectionPr
 }) => {
   const [stepsImgFailed, setStepsImgFailed] = useState(false);
   const [bannerImgFailed, setBannerImgFailed] = useState(false);
+  const [failedGalleryUrls, setFailedGalleryUrls] = useState<Record<string, boolean>>({});
   const DirectionalChevron = lang === 'ar' ? ChevronLeft : ChevronRight;
+
+  const markGalleryFailed = (src: string) => {
+    setFailedGalleryUrls((prev) => ({ ...prev, [src]: true }));
+  };
 
   const galleryPhotos = [
     { src: CLINIC_IMAGES.naturalSmile, alt: gallery.captions[0] },
@@ -92,13 +97,20 @@ export const VisitStepsAndGallerySection: React.FC<VisitStepsAndGallerySectionPr
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5">
             {/* Tall Left Photo */}
-            <div className="md:col-span-4 aspect-[3/4] md:aspect-auto md:min-h-[430px] rounded-2xl overflow-hidden bg-[#2E2D2A]">
-              <img
-                src={galleryPhotos[0].src}
-                alt={galleryPhotos[0].alt}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center"
-              />
+            <div className="md:col-span-4 aspect-[3/4] md:aspect-auto md:min-h-[430px] rounded-2xl overflow-hidden bg-[#2E2D2A] border border-white/10">
+              {!failedGalleryUrls[galleryPhotos[0].src] ? (
+                <img
+                  src={galleryPhotos[0].src}
+                  alt={galleryPhotos[0].alt}
+                  referrerPolicy="no-referrer"
+                  onError={() => markGalleryFailed(galleryPhotos[0].src)}
+                  className="w-full h-full object-cover object-center"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center p-6 text-center">
+                  <span className="font-display text-xl text-[#E9BA4A]">{galleryPhotos[0].alt}</span>
+                </div>
+              )}
             </div>
 
             {/* Right 2x2 Photo Grid */}
@@ -106,14 +118,21 @@ export const VisitStepsAndGallerySection: React.FC<VisitStepsAndGallerySectionPr
               {galleryPhotos.slice(1).map((photo) => (
                 <div
                   key={photo.src}
-                  className="aspect-[16/10] sm:aspect-auto sm:min-h-[205px] rounded-2xl overflow-hidden bg-[#2E2D2A]"
+                  className="aspect-[16/10] sm:aspect-auto sm:min-h-[205px] rounded-2xl overflow-hidden bg-[#2E2D2A] border border-white/10"
                 >
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover object-center"
-                  />
+                  {!failedGalleryUrls[photo.src] ? (
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      referrerPolicy="no-referrer"
+                      onError={() => markGalleryFailed(photo.src)}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center p-6 text-center">
+                      <span className="font-display text-lg text-[#E9BA4A]">{photo.alt}</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildWhatsAppBookingUrl,
   formatWhatsAppMessage,
+  getLocalIsoDate,
   isValidPhoneNumber,
   validateAppointmentForm,
   type AppointmentFormData,
@@ -22,6 +23,11 @@ test('isValidPhoneNumber accepts valid Oman and international numbers and reject
   assert.equal(isValidPhoneNumber('91234567'), true);
   assert.equal(isValidPhoneNumber('12345'), false);
   assert.equal(isValidPhoneNumber('abc'), false);
+});
+
+test('getLocalIsoDate formats local calendar date as YYYY-MM-DD', () => {
+  const sample = new Date(2026, 10, 5, 1, 30, 0);
+  assert.equal(getLocalIsoDate(sample), '2026-11-05');
 });
 
 test('validateAppointmentForm returns errors for missing fields in English and Arabic', () => {

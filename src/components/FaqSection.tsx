@@ -10,7 +10,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ content }) => {
   const [openId, setOpenId] = useState<string | null>(content.items[0]?.id ?? null);
 
   return (
-    <section className="bg-silk-cream py-20 sm:py-28 border-t border-[#252525]/8">
+    <section id="faq" className="bg-silk-cream py-20 sm:py-28 border-t border-[#252525]/8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left Sticky Header Column */}
